@@ -5,7 +5,7 @@ module.exports = {
         "node": true
     },
     "extends": [
-        "eslint:recommended",
+        "airbnb-base",
         "plugin:react/recommended"
     ],
     "globals": {
@@ -22,6 +22,7 @@ module.exports = {
     "plugins": [
         "react"
     ],
-    "rules": {
+    "rules": 
+        "comma-dangle": 0
     }
 };
