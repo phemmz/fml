@@ -22,7 +22,9 @@ module.exports = {
     "plugins": [
         "react"
     ],
-    "rules": 
-        "comma-dangle": 0
+    "rules": {
+        "comma-dangle": 0,
+        "arrow-parens": 0,
+        "import/no-named-as-default-member": 0
     }
 };
