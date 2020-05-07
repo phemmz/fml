@@ -24,15 +24,15 @@ const MarketModel = (sequelize, DataTypes) => {
       },
     },
     images: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1234),
     },
-    address: {
+    location: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
           args: true,
-          msg: 'Address can not be empty',
+          msg: 'Location can not be empty',
         },
       },
     }

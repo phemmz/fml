@@ -1,4 +1,6 @@
 'use strict';
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -12,18 +14,24 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    const salt = bcrypt.genSaltSync(10);
+
+    const testPass1 = bcrypt.hashSync('123456', salt);
+    const testPass2 = bcrypt.hashSync('password', salt);
     return queryInterface.bulkInsert('Users', [{
-      name: 'John Doe',
+      id: uuidv4(),
+      name: 'theagromall',
       email: 'test@theagromall.com',
-      password: 'password',
+      password: testPass2,
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
+      id: uuidv4(),
       name: 'John Doe',
       email: 'user@user.com',
-      password: '123456',
+      password: testPass1,
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()

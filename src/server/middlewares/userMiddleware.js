@@ -35,7 +35,7 @@ const authenticate = (request, response, next) => {
         if (error) {
           sendResponse(response, 403, {
             success: false,
-            error: "You don't have permission to access this route!"
+            error: "You don't have permission to access this endpoint!"
           });
         } else {
           const data = await User.findOne({

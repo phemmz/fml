@@ -1,24 +1,22 @@
 import { Op } from 'sequelize';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Market, User } from '../models';
-import { sendResponse, convertImagesToArray } from '../helpers/utils';
+import { sendResponse } from '../helpers/utils';
 
 const addMarket = async (request, response) => {
-  const { name, address, images = [], ...marketData } = request.body;
+  const { name, location, ...marketData } = request.body;
   try {
     const [data, created] = await Market.findOrCreate({
-      where: { name, address },
-      defaults: { ...marketData, images: images.join(','), userId: request.userId }
+      where: { name, location },
+      defaults: { ...marketData, id: uuidv4(), userId: request.userId }
     });
 
     if (created) {
       const plainMarket = data.get({ plain: true });
 
       sendResponse(response, 201, {
-        data: {
-          ...plainMarket,
-          images: plainMarket.images && plainMarket.images.split(',')
-        },
+        data: plainMarket,
         success: true,
         message: 'Market created successfully',
       });
@@ -40,7 +38,7 @@ const addMarket = async (request, response) => {
 const getMarkets = async (request, response) => {
   try {
     let data;
-    const { name = '', category = '', address = '' } = request.query;
+    const { name = '', category = '', nearestMarket = '' } = request.query;
     if (request.userId) {
       data = await User.findAll({
         where: {
@@ -61,8 +59,8 @@ const getMarkets = async (request, response) => {
                 category: {
                   [Op.iLike]: `%${category}%`
                 },
-                address: {
-                  [Op.iLike]: `%${address}%`
+                location: {
+                  [Op.iLike]: `%${nearestMarket}%`
                 },
               }
             ]
@@ -80,8 +78,8 @@ const getMarkets = async (request, response) => {
               category: {
                 [Op.iLike]: `%${category}%`
               },
-              address: {
-                [Op.iLike]: `%${address}%`
+              location: {
+                [Op.iLike]: `%${nearestMarket}%`
               },
             }
           ]
@@ -96,7 +94,7 @@ const getMarkets = async (request, response) => {
       });
     } else {
       sendResponse(response, 200, {
-        data: request.userId ? data : convertImagesToArray(data),
+        data,
         success: true,
         message: 'Successful',
       });

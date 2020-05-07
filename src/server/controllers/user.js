@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import { User } from '../models';
 import { sendResponse } from '../helpers/utils';
@@ -9,7 +10,7 @@ const signup = async (request, response) => {
   try {
     const [data, created] = await User.findOrCreate({
       where: { email },
-      defaults: { ...signupData }
+      defaults: { ...signupData, id: uuidv4() }
     });
 
     if (created) {
@@ -59,6 +60,7 @@ const login = async (request, response) => {
         const token = jwt.sign({
           id: userObj.id,
           name: userObj.name,
+          role: userObj.role
         }, process.env.JWTSECRET, { expiresIn: 60 * 60 });
 
         sendResponse(response, 200, {

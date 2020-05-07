@@ -3,9 +3,9 @@ module.exports = {
     return queryInterface.createTable('Markets', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
       name: {
         type: Sequelize.STRING,
@@ -31,20 +31,21 @@ module.exports = {
         },
       },
       images: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1234)
       },
-      address: {
+      location: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
             args: true,
-            msg: 'Address can not be empty',
+            msg: 'Location can not be empty',
           },
         },
       },
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
