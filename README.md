@@ -20,14 +20,14 @@ REACT_APP_MAP_KEY - needed to access google map api
 ### `yarn start`
 
 Runs the frontend app in the development mode.<br />
-Default PORT is 5000 but you can also run on 3000. Those are the CORS enabled ports.
+Default PORT is 3000 but you can run on other ports but only port 3000 and 5000 are enabled through CORS enabled.
 
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `yarn dev:server`
 
 Runs the server api in the development mode.<br />
-Default PORT is 300 but you can use any port.
+Default PORT is 5000 but you can use any port. The API needs to run on port 5000 as it is currently hardcoded on the frontend
 
 ## Development
 

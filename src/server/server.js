@@ -38,5 +38,5 @@ app.use((_, res) => {
   });
 });
 
-const { PORT = 3000 } = process.env;
+const { PORT = 5000 } = process.env;
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`));
