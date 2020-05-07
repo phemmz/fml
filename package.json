@@ -1,14 +1,52 @@
 {
   "name": "fml",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A food market location app",
-  "main": "app.js",
+  "private": true,
   "scripts": {
-    "start": "node dist/app.js",
-    "dev:server": "nodemon --watch src --exec babel-node -- src/server/app.js ",
-    "build:server": "babel ./src/server --out-dir dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start:server": "node dist/server.js",
+    "dev:server": "nodemon --watch src/server --exec babel-node -- src/server/server.js ",
+    "build:server": "babel ./src/server --out-dir build/server",
     "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "express": "^4.17.1",
+    "google-map-react": "^1.1.7",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
+    "nodemon": "^2.0.3",
+    "pg": "^8.0.3",
+    "pg-hstore": "^2.3.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-modal": "^3.11.2",
+    "react-scripts": "3.4.1",
+    "react-swipeable-views": "^0.13.9",
+    "react-swipeable-views-utils": "^0.13.9",
+    "sequelize": "^5.21.7",
+    "styled-components": "^5.1.0",
+    "uuid": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0"
   },
   "repository": {
     "type": "git",
@@ -24,25 +62,16 @@
   "bugs": {
     "url": "https://github.com/phemmz/fml/issues"
   },
-  "homepage": "https://github.com/phemmz/fml#readme",
-  "dependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.6",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.3",
-    "pg": "^8.0.3",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.7"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
