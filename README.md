@@ -1,68 +1,150 @@
 # fml
+FML is a mini market data bank to show food market location
 
-## Available Scripts
-
-In the project directory, you can run:
+## Installation
+1. Start up your terminal (or Command Prompt on Windows OS).
+2. Ensure that you have `node` installed on your PC.
+3. Clone the repository by entering the command `git clone https://github.com/phemmz/fml.git` in the terminal.
+4. Navigate to the project root folder using `cd fml` on your terminal (or command prompt).
+5. After cloning, install the application's dependencies with the command `yarn`.
+6. Create a `.env` file in your root directory as described in `.env.sample` file.
+7. Variable such as DATABASE_URL (which must be a postgresql URL) is defined in the .env file and it is essential to create this file before running the application.
+```
+DATABASE_URL='postgres://username:password@hostname/databasename'
+```
+Other important variables are
+JWTSECRET - needed to sign jsonwebtoken
+REACT_APP_MAP_KEY - needed to access google map api
+8. After this, you can start the server with the command:
 
 ### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the frontend app in the development mode.<br />
+Default PORT is 5000 but you can also run on 3000. Those are the CORS enabled ports.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
-### `yarn test`
+### `yarn dev:server`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the server api in the development mode.<br />
+Default PORT is 300 but you can use any port.
 
-### `yarn build`
+## Development
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This application was developed using [ExpressJS](http://expressjs.com) for backend and [ReactJS](https://reactjs.org/) for the frontend. [PostgreSQL](https://www.postgresql.org/) was used for persisting data with [Sequelize](https://http://docs.sequelizejs.com) as [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## API Documentation
+These are the main features of the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Users
+- There are two types of users - admin and user. Only Admin can add, update and delete markets and requires authentication to do this via login which is shown below:
 
-### `yarn eject`
+```POST /login```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `email` | `string` | **Required**. Your email address |
+| `password` | `string` | **Required**. Password, minimum of 6 characters |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Response
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The API endpoint return a JSON representation based on the status of the transaction
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+200
+```javascript
+{
+  "message" : string,
+  "token"   : string,
+  "success" : bool,
+  "data"    : object
+}
+```
 
-## Learn More
+### Market
+- You can perform CRUD operations on the market endpoint 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```GET /market```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Response
 
-### Code Splitting
+The API endpoint return a JSON representation based on the status of the transaction
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+200
+```javascript
+{
+  "message" : string,
+  "token"   : string,
+  "success" : bool,
+  "data"    : array
+}
+```
 
-### Analyzing the Bundle Size
+```POST /market```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `name` | `string` | **Required**. Market name |
+| `category` | `string` | **Required**. Food category |
+| `description` | `string` | Brief description of market |
+| `location` | `string` | **Required**. Location of the market |
+| `images` | `string` | **Required**. Sample images of market. Maximum of 3 allowed |
 
-### Making a Progressive Web App
+## Response
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+The API endpoint return a JSON representation based on the status of the transaction
 
-### Advanced Configuration
+200
+```javascript
+{
+  "message" : string,
+  "success" : bool,
+  "data"    : object
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```PATCH /market```
 
-### Deployment
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | **Required**. Market id to update |
+| `name` | `string` | **Required**. Market name |
+| `category` | `string` | **Required**. Food category |
+| `description` | `string` | Brief description of market |
+| `location` | `string` | **Required**. Location of the market |
+| `images` | `string` | **Required**. Sample images of market. Maximum of 3 allowed |
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Response
 
-### `yarn build` fails to minify
+The API endpoint return a JSON representation based on the status of the transaction
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+200
+```javascript
+{
+  "message" : string,
+  "success" : bool,
+  "data"    : object
+}
+```
+
+```DELETE /market```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | **Required**. Market id |
+
+## Response
+
+The API endpoint return a JSON representation based on the status of the transaction
+
+200
+```javascript
+{
+  "message" : string,
+  "success" : bool
+}
+```
+
+## Limitations or Things to Improve on
+- Mobile responsiveness is not the best
+- Logic to get nearest market locations can be improved on
+- Use server side rendering to protect client side keys like google map api key
