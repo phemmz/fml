@@ -27,7 +27,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Install Modules
-        run: npm ci
+        run: rm -rf node_modules && yarn install --frozen-lockfile
       - name: Build Application
         run: npm run build
       - name: Deploy to S3
