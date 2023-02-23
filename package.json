@@ -40,7 +40,7 @@
     "react-scripts": "3.4.1",
     "react-swipeable-views": "^0.13.9",
     "react-swipeable-views-utils": "^0.13.9",
-    "sequelize": "^5.21.7",
+    "sequelize": "^6.28.2",
     "styled-components": "^5.1.0",
     "uuid": "^8.0.0"
   },
